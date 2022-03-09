@@ -1,7 +1,6 @@
-import './style.css'
+import './style.scss';
+import Alpine from 'alpinejs';
+import ftiApp from './src/js/ftiApp';
+window.ftiApp = ftiApp;
 
-document.querySelector('#app').innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
-
+Alpine.start()

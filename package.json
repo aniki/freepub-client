@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "netlify": "^11.0.0",
+    "netlify-cli": "^9.13.0",
+    "sass": "^1.49.9"
+  },
+  "scripts": {
+    "debug": "netlify dev --debug"
+  }
+}

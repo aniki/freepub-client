@@ -1,16 +1,22 @@
 const cheerio = require('cheerio');
 const axios = require('axios').default;
-const { domain } = require('../conf');
+const { DOMAIN } = process.env;
 
 const handler = async (event) => {
 
   try {
     const q = { filename: event.queryStringParameters.filename, directory: event.queryStringParameters.directory };
-    const url = `${domain}/upload.php?action=downloadfile&filename=${q.filename}&directory=${q.directory}&`;
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+    };  
+    const url = `https://${DOMAIN}/upload.php?action=downloadfile&filename=${q.filename}&directory=${q.directory}&`;
 
     if (event.httpMethod !== "GET") {
       return {
         statusCode: 401,
+        headers,
         body: JSON.stringify({ message: "Not allowed" }),
       }
     }
@@ -22,12 +28,14 @@ const handler = async (event) => {
       .catch(err => {
         return {
           statusCode: 500,
+          headers,
           body: JSON.stringify({ error: err }),
         }
       })
       .then(response => {
         return {
           statusCode: 200,
+          headers,
           body: JSON.stringify({ q: { filename: q.filename, directory: q.directory }, captcha : response }),
         }
       })
@@ -43,7 +51,7 @@ const parser = (html) => {
   const selector = 'body > center > table[bgcolor=#000000] img';
   const path = $(selector).attr('src');
   console.log(path);
-  return `${domain}/${path}`;
+  return `http://${DOMAIN}/${path}`;
 }
 
 // Get Image

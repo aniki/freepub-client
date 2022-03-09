@@ -1,4 +1,5 @@
+const { DOMAIN } = process.env;
 const conf = {
-    domain : 'https://fourtoutici.ac'
+    domain : DOMAIN
 }
 module.exports = conf
