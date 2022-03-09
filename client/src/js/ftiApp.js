@@ -1,5 +1,5 @@
 export default () => {
-    const domain = 'localhost:8888';
+    const domain = 'fti-search.netlify.app';
 
     return {
         domain: '',
