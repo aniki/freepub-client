@@ -1,4 +1,6 @@
-const axios = require('axios').default;
+// const axios = require('axios').default;
+const fetch = require('fetch');
+
 const { DOMAIN } = process.env;
 
 const handler = async (event) => {
@@ -13,32 +15,34 @@ const handler = async (event) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-      'responseType':'blob'
+      'responseType': 'blob'
     };
     const url = `https://${DOMAIN}/upload.php?action=download&directory=${q.directory}&filename=${q.filename}&valcodeup=${q.code}`;
 
-    return axios({ url, method: 'GET', responseType: 'blob' })
-      .then(response => {
-        const res = response;
-        return res;
-      })
-      .catch(err => {
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({ error: err }),
-        }
-      })
-      .then(response => {
 
-        return {
-          statusCode: 200,
-          headers: { 
-            ...response.headers,
-            ...headers },
-          body: response.data,
-        }
-      })
+
+    // return axios({ url, method: 'GET', responseType: 'blob'})
+    //   .then(response => {
+    //     const res = response;
+    //     return res;
+    //   })
+    //   .catch(err => {
+    //     return {
+    //       statusCode: 500,
+    //       headers,
+    //       body: JSON.stringify({ error: err }),
+    //     }
+    //   })
+    //   .then(response => {
+
+    //     return {
+    //       statusCode: 200,
+    //       headers: { 
+    //         ...response.headers,
+    //         ...headers },
+    //       body: response.data,
+    //     }
+    //   })
 
   } catch (error) {
     return { statusCode: 500, headers, body: error.toString() }
