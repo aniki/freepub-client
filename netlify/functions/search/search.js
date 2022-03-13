@@ -31,10 +31,13 @@ const handler = async (event, context) => {
     let fixedType = ''
     switch (type) {
       case '':
+      case 'ebook':
+      case 'ebooks':
         fixedType = 'ebook';
         break;
+      case 'bande  dessinee':
       case 'bande dessinee':
-        fixedType = 'BD';
+          fixedType = 'BD';
         break;
       case 'audiobook':
       case 'auudiobook':

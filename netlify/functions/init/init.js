@@ -1,4 +1,4 @@
-const { DOMAIN } = process.env;
+const { API } = process.env;
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -11,7 +11,7 @@ const handler = async (event) => {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ domain: DOMAIN }),
+      body: JSON.stringify({ domain: API }),
     }
   } catch (error) {
     return { statusCode: 500, body: error.toString() }

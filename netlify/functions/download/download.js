@@ -1,7 +1,17 @@
-// const axios = require('axios').default;
-const fetch = require('fetch');
+const { DOMAIN , API_KEY, APP_ID, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET } = process.env;
 
-const { DOMAIN } = process.env;
+var { initializeApp } = require('firebase/app');
+const { getStorage, getDownloadURL, ref, uploadBytes } = require("firebase/storage");
+const firebaseConfig = {
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  appId: APP_ID
+};
+const app = initializeApp(firebaseConfig);
+
+const fetch = require('node-fetch');
 
 const handler = async (event) => {
 
@@ -11,41 +21,34 @@ const handler = async (event) => {
       directory: event.queryStringParameters.directory,
       code: event.queryStringParameters.code
     };
-    const headers = {
+    const cors_headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-      'responseType': 'blob'
+      'Access-Control-Expose-Headers': 'Content-Disposition',
+      'responseType': 'arraybuffer'
     };
     const url = `https://${DOMAIN}/upload.php?action=download&directory=${q.directory}&filename=${q.filename}&valcodeup=${q.code}`;
 
+    const response = await fetch(url).then((res) => {
+      return res
+    });
+    const content_type = response.headers.get('content-type');
+    const buffer = await response.buffer();
+    const storage = getStorage();
+    const fileRef = ref(storage, `uploads/${q.filename}`);
+    const fileUrl = await uploadBytes(fileRef, buffer).then((snapshot) => {
+      return getDownloadURL(snapshot.ref)
+    });
 
-
-    // return axios({ url, method: 'GET', responseType: 'blob'})
-    //   .then(response => {
-    //     const res = response;
-    //     return res;
-    //   })
-    //   .catch(err => {
-    //     return {
-    //       statusCode: 500,
-    //       headers,
-    //       body: JSON.stringify({ error: err }),
-    //     }
-    //   })
-    //   .then(response => {
-
-    //     return {
-    //       statusCode: 200,
-    //       headers: { 
-    //         ...response.headers,
-    //         ...headers },
-    //       body: response.data,
-    //     }
-    //   })
+    return {
+      statusCode: 200,
+      headers: cors_headers,
+      body: JSON.stringify({ fileUrl }),
+    }
 
   } catch (error) {
-    return { statusCode: 500, headers, body: error.toString() }
+    return { statusCode: 500, body: error.toString() }
   }
 }
 

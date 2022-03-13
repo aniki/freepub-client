@@ -6,5 +6,8 @@
   },
   "scripts": {
     "debug": "netlify dev --debug"
+  },
+  "dependencies": {
+    "firebase": "^9.6.8"
   }
 }

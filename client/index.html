@@ -11,49 +11,61 @@
 <body>
   <div id="app" x-data="ftiApp()">
     <header>
-      <h1>eBook Badaboum</h1>
+      <h1 x-text="i18n[lang].main_title"></h1>
+      <span x-text="i18n[lang].subtitle"></span>
     </header>
 
-    <section id="search">
-      <form action="" @submit.prevent="query">
-        <fieldset>
-          <input type="text" name="search" placeholder="Titre, Auteur..." x-model="q" />
-          <button type="submit">Rechercher</button>
-        </fieldset>
-        <div class="loader-wrapper">
-          <div class="loader"><div></div><div></div><div></div><div></div></div>
+    <main>
+      <section id="search">
+        <form action="" @submit.prevent="query">
+          <fieldset>
+            <input type="text" name="search" :placeholder="i18n[lang].search_placeholder" x-model="q" />
+            <button type="submit" class="button" x-text="i18n[lang].search"></button>
+          </fieldset>
+          <div class="loader-wrapper">
+            <div class="loader"><div></div><div></div><div></div><div></div></div>
+          </div>
+        </form>
+      </section>
+  
+      <section id="results">
+        <h1 x-text="i18n[lang].results"></h1>
+        <ul class="list">
+          <template x-for="(book, index) in books" :key="index">
+            <li>
+              <button class="file-info" @click="captcha($event, book.filename, book.directory)">
+                <span class="type" x-text="book.type" :class="book.type.replace(' ', '').toLowerCase()"></span>
+                <div class="data">
+                  <strong class="author" x-text="book.title.trim().replace(/^-/g, '').split('-')[0].trim()"></strong>
+                  <span class="title" x-text="book.title.trim().replace(/^-/g, '').split('-')[1].trim()"></span>
+                  <span class="size" x-text="book.size"></span>
+                  </div>  
+              </button>
+            </li>
+          </template>
+        </ul>
+      </section>  
+
+      <section id="download" :class="isDownloadable ? 'is-active' : ''">
+        <button class="close" @click="isDownloadable = !isDownloadable; currentBook.downloadUrl = ''" x-text="i18n[lang].close"></button>
+        <div class="captcha" x-show="currentBook.downloadUrl === ''">
+
+          <img :src="currentBook.captcha" class="captchaImage" alt="">
+    
+          <form action="" @submit.prevent="download">
+            <input type="text" x-model="currentBook.code" :placeholder="i18n[lang].captcha_placeholder">
+            <button type="submit" class="button" x-text="i18n[lang].submit"></button>
+          </form>
         </div>
-      </form>
-    </section>
+    
+        <div class="get-file" x-show="currentBook.downloadUrl !== ''">
+          <a :href="currentBook.downloadUrl" x-text="i18n[lang].download"></a>
+        </div>
+      </section>
+  
+    </main>
 
-    <div class="captcha">
-      <img :src="currentBook.captcha" alt="">
-
-      <form action="" @submit.prevent="download">
-        <input type="text" x-model="currentBook.code">
-        <button type="submit">OK</button>
-      </form>
-    </div>
-
-    <section id="download" x-show="currentBook.downloadUrl != ''">
-      <a :href="currentBook.downloadUrl">Download</a>
-    </section>
-
-    <section id="results">
-      <h1>Résultats</h1>
-      <ul>
-        <template x-for="(book, index) in books" :key="index">
-          <li>
-            <button class="file-info" @click="captcha($event, book.filename, book.directory)">
-              <span class="type" x-text="book.type"></span>
-              <span class="title" x-text="book.title"></span>
-              <span class="size" x-text="book.size"></span>
-            </button>
-          </li>
-        </template>
-      </ul>
-    </section>
-
+    <div class="overlay" :class="isDownloadable ? 'is-active' : ''"></div>
   </div>
 
   <script type="module" src="./main.js"></script>
