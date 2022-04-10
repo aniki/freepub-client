@@ -1,6 +1,6 @@
 const { DOMAIN , API_KEY, APP_ID, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET } = process.env;
 
-var { initializeApp } = require('firebase/app');
+const { initializeApp } = require('firebase/app');
 const { getStorage, getDownloadURL, ref, uploadBytes } = require("firebase/storage");
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -21,15 +21,16 @@ const handler = async (event) => {
       directory: event.queryStringParameters.directory,
       code: event.queryStringParameters.code
     };
+    const cookie = event.headers.cookie;
     const cors_headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
       'Access-Control-Expose-Headers': 'Content-Disposition',
-      'responseType': 'arraybuffer'
+      'responseType': 'arraybuffer',
+      'credentials': 'include',
     };
-    const url = `https://${DOMAIN}/upload.php?action=download&directory=${q.directory}&filename=${q.filename}&valcodeup=${q.code}`;
-
+    const url = `https://${DOMAIN}/upload.php?action=download&directory=${q.directory}&filename=${encodeURI(q.filename)}&valcodeup=${q.code}`;
     const response = await fetch(url).then((res) => {
       return res
     });
@@ -38,13 +39,13 @@ const handler = async (event) => {
     const storage = getStorage();
     const fileRef = ref(storage, `uploads/${q.filename}`);
     const fileUrl = await uploadBytes(fileRef, buffer).then((snapshot) => {
-      return getDownloadURL(snapshot.ref)
+      return getDownloadURL(snapshot.ref);
     });
 
     return {
       statusCode: 200,
-      headers: cors_headers,
-      body: JSON.stringify({ fileUrl }),
+      headers: {...cors_headers, ...{cookie}},
+      body: JSON.stringify({ cookie, url, fileUrl }),
     }
 
   } catch (error) {
@@ -56,4 +57,3 @@ module.exports = { handler }
 
 // https://fourtoutici.ac/upload.php?action=download&directory=%2F2021%2F2021-06%2F2021-06-04&filename=EBOOK+Rob+Chilson+-+La+cite+des+robots+dIsaac+Asimov++Refuge.epub&valcodeup=d414
 
-// Your function response must have a string body. You gave: [object Object]

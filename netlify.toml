@@ -14,6 +14,11 @@
 
   ## more info on configuring this file: https://www.netlify.com/docs/netlify-toml-reference/
 
+[build]
+  base = "client/"
+  command = "npm run build"
+  publish = "dist/"
+
 [functions]
   directory = "/netlify/functions/"
 
