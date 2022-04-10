@@ -1,7 +1,7 @@
 import { i18n } from './i18n';
 
 export default () => {
-    const domain = 'http://localhost:8080';
+    const domain = 'https://freepub-api.herokuapp.com';
     // const domain = 'https://fti-search.netlify.app';
 
     return {

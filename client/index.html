@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="manifest" href="./assets/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FTI App</title>
+  <title>FREEPUB - La Culture Pour Tous</title>
 </head>
 
 <body>
-  <div id="app" x-data="App()">
+  <div id="app" data-service="freepub-api.herokuapp.com" x-data="App()">
     <header>
       <h1 x-text="i18n[lang].main_title"></h1>
       <span x-text="i18n[lang].subtitle"></span>
@@ -53,7 +54,7 @@
           <img :src="currentBook.captcha" class="captchaImage" alt="">
     
           <form action="" @submit.prevent="download">
-            <input type="text" x-model="currentBook.code" :placeholder="i18n[lang].captcha_placeholder">
+            <input type="tel" x-model="currentBook.code" :placeholder="i18n[lang].captcha_placeholder">
             <button type="submit" class="button" x-text="i18n[lang].submit"></button>
           </form>
         </div>
