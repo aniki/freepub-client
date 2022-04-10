@@ -67,11 +67,13 @@ const handler = async (event, context) => {
   return axios.get(url)
     .then(response => {
       const results = parser(response.data);
+      const cookies = response.headers["set-cookie"];
+
       // return res.status(200).json({ query, result })
       return {
         statusCode: 200, // <-- Important!
         headers,
-        body: JSON.stringify({ query, results })
+        body: JSON.stringify({ query, cookies, results  })
       };
     })
     .catch(err => {

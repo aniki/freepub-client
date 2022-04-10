@@ -4,13 +4,15 @@ const { DOMAIN } = process.env;
 
 const handler = async (event) => {
 
+
+
   try {
     const q = { filename: event.queryStringParameters.filename, directory: event.queryStringParameters.directory };
     const headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
-    };  
+    };
     const url = `https://${DOMAIN}/upload.php?action=downloadfile&filename=${q.filename}&directory=${q.directory}&`;
 
     if (event.httpMethod !== "GET") {
@@ -22,8 +24,12 @@ const handler = async (event) => {
     }
 
     return axios.get(url)
-      .then(response => {
-        return getBase64Image(parser(response.data));
+      .then(async response => {
+        const res = response;
+        const cookies = event.headers.cookie;
+        // axios.defaults.headers.cookie = res.headers['set-cookie'];
+        const {captcha, captcha_response} = await getBase64Image(parser(res.data), cookies);
+        return { cookies, captcha, captcha_response };
       })
       .catch(err => {
         return {
@@ -33,10 +39,11 @@ const handler = async (event) => {
         }
       })
       .then(response => {
+        const { cookies, captcha, captcha_response } = response;
         return {
           statusCode: 200,
           headers,
-          body: JSON.stringify({ q: { filename: q.filename, directory: q.directory }, captcha : response }),
+          body: JSON.stringify({ q: { filename: q.filename, directory: q.directory }, cookies, captcha, captcha_response: response }),
         }
       })
 
@@ -55,13 +62,18 @@ const parser = (html) => {
 }
 
 // Get Image
-const getBase64Image = (url) => {
-  console.log('getBase64Image', url);
+const getBase64Image = (url, cookies) => {
   return axios
     .get(url, {
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
+      headers: {
+        // cookie: cookies,
+      },
     })
-    .then(response => Buffer.from(response.data, 'binary').toString('base64'))
+    .then((response) => {
+      const res = response;
+      return {captcha : Buffer.from(res.data, 'binary').toString('base64'), captcha_response: res.headers['set-cookie']};
+    })
 }
 
 module.exports = { handler }

@@ -14,11 +14,13 @@
 
   ## more info on configuring this file: https://www.netlify.com/docs/netlify-toml-reference/
 
-[functions]
-  directory = "/netlify/functions/"
+[build]
+  base = "client/"
+  command = "npm run build"
+  publish = "dist/"
 
 # [context.production.environment]
-# API = "fti-search.netlify.app"
+# API = "freepub-app.netlify.app"
 
 # [context.development.environment]
 # API = "localhost:8888"
