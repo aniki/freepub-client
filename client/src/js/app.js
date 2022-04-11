@@ -1,4 +1,10 @@
 import { i18n } from './i18n';
+import { registerSW } from "virtual:pwa-register";
+
+if ("serviceWorker" in navigator) {
+  // && !/localhost/.test(window.location)) {
+  registerSW();
+}
 
 export default () => {
     const domain = 'https://freepub-api.herokuapp.com';
@@ -16,22 +22,16 @@ export default () => {
             downloadUrl: ''
         },
         cookies: [],
+        isSearching: false,
         isDownloadable: false,
+        isGettingCaptcha: false,
 
         async init() {
             // localStorage sync
             this.books = JSON.parse(localStorage.getItem('books')) || [];
-
-            // // get domain
-            // this.api_domain = await fetch(`${domain}/.netlify/functions/init`)
-            //     .then(
-            //         async (response) => {
-            //             const res = await response.json()
-            //             return res.domain;
-            //         }
-            //     )
         },
         async query() {
+            this.isSearching = true;
             // search query
             const res = await fetch(`${domain}/search?q=${this.q}`)
                 .then(
@@ -49,9 +49,11 @@ export default () => {
             // set cookies for PHPSession
             this.cookies = res.cookies;
             document.cookie = res.cookies;
-
+            this.isSearching = false;
         },
         async captcha(e, filename, directory) {
+            this.isGettingCaptcha = true;
+
             if (e) {
                 const res = await fetch(`${domain}/captcha?filename=${filename}&directory=${directory}`, { credentials: "same-origin" })
                     .then(

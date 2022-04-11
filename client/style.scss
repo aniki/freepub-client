@@ -1,3 +1,5 @@
+@import 'src/scss/loader.scss';
+
 body {
   padding: 0;
   margin: 0;
@@ -22,7 +24,8 @@ input {
   background-color: #5e5ff4;
   border: 1px solid #5e5ff4;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 0 10px;
+  padding-top: 4px;
   font-size: 20px;
   font-weight: bold;
 
@@ -44,13 +47,38 @@ input + .button {
 }
 
 header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
   h1 {
-    margin-bottom: 0;
+    position: relative;
+    margin-bottom: 2px;
     text-transform: uppercase;
+    align-self: center;
+    font-size: 38px;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      height: 4px;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #5e5ff4;
+    }
+    &::after  {
+      top: auto;
+      bottom: 3px;
+    }
   }
   span {
     display: inline-block;
     margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
   }
 }
 
@@ -61,6 +89,7 @@ header {
   margin-bottom: 40px;
   background: white;
   box-shadow: 0 0 10px rgb(255 255 255), 0 0 10px rgb(255 255 255);
+  z-index: 1;
 
   form {
     position: relative;
@@ -83,12 +112,18 @@ header {
     input {
       flex: 1;
       width: 50%;
+      height: 58px;
       border-right: 0;
       border-radius: 5px 0 0 5px;
+      border: 1px solid #5e5ff4;
     }
 
     button {
+      height: 60px;
+      border: 1px solid #5e5ff4;
       border-radius: 0 5px 5px 0;
+      margin-left: -2px;
+      margin-top: 0;
     }
   }
 }
@@ -104,6 +139,7 @@ header {
     padding: 0 20px;
     list-style-type: none;
     text-align: left;
+    position: relative;
 
     li {
       display: flex;
@@ -114,6 +150,7 @@ header {
     .file-info {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       width: 100%;
       min-height: 50px;
       border: 0;
@@ -167,10 +204,12 @@ header {
         flex-grow: 1;
         align-self: stretch;
         align-items: center;
-        font-size: 13px;
+        font-size: 14px;
+        font-weight: bold;
       }
       .author {
-        margin-bottom: 2px;
+        font-size: 14px;
+        font-weight: normal;
       }
       .size {
         display: flex;
@@ -180,7 +219,20 @@ header {
         color: #666;
         padding: 3px 5px;
         border-radius: 3px;
-        margin-top: 7px;
+        margin-top: 5px;
+      }
+
+      .dl-icon {
+        width:24px;
+        height:24px;
+        margin-left: 8px;
+        border-radius: 20px;
+        background: #aaa;
+        padding: 3px;
+
+        path {
+          fill: white;
+        }
       }
     }
   }
@@ -190,7 +242,7 @@ header {
   transform: translate3d(0, 100vh, 0);
   position: fixed;
   background-color: white;
-  top: 50px;
+  top: 60%;
   left: 0;
   right: 0;
   bottom: 0;
@@ -281,7 +333,7 @@ header {
 
 .overlay {
   opacity: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -297,58 +349,3 @@ header {
   }
 }
 
-.loader {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.loader div {
-  position: absolute;
-  top: 33px;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: grey;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.loader div:nth-child(1) {
-  left: 8px;
-  animation: loader1 0.6s infinite;
-}
-.loader div:nth-child(2) {
-  left: 8px;
-  animation: loader2 0.6s infinite;
-}
-.loader div:nth-child(3) {
-  left: 32px;
-  animation: loader2 0.6s infinite;
-}
-.loader div:nth-child(4) {
-  left: 56px;
-  animation: loader3 0.6s infinite;
-}
-@keyframes loader1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes loader3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes loader2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
-}
