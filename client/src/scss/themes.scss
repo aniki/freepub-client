@@ -1,0 +1,44 @@
+// colors
+html {
+    --color-bg: #fff;
+    --color-bg2: #f5f5f5;
+    --color-txt: #000;
+    --color-txt2: #666;
+    --color-icon: #aaa;
+    --color-title: #333;
+    --color-line: #e7eaf0;
+    --color-primary: #5e5ff4;
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-bg-overlay: rgba(255, 255, 255, 0.7);
+
+    --icon-default: #000;
+    --icon-default-light: rgb(255, 255, 255, 0.2);
+    --icon-ebook: #736fdc;
+    --icon-ebook-light: rgb(115, 111, 220, 0.2);
+    --icon-music: #de4783;
+    --icon-music-light: rgb(222, 71, 131, 0.2);
+    --icon-audiobook: #fd8b04;
+    --icon-audiobook-light: rgb(253, 139, 4, 0.2);
+    --icon-film: #dc6e6e;
+    --icon-film-light: rgb(220, 110, 110, 0.2);
+    --icon-bd: #18c388;
+    --icon-bd-light: rgb(24, 195, 136, 0.2);  
+}
+@media (prefers-color-scheme: dark) {
+    html {
+      --color-bg: #111;
+      --color-bg2: #333333;
+      --color-txt: #ccc;
+      --color-txt2: #aaa;
+      --color-icon: #444;
+      --color-title: #ddd;
+      --color-line: #2c2c2e;
+      --color-primary: #cb6500;
+      --color-overlay: rgba(0, 0, 0, 0.7);
+      --color-bg-overlay: rgba(0, 0, 0, 0.7);
+
+      --icon-default: #fff;
+      --icon-default-light: rgb(255, 255, 255, 0.1);
+  
+    }
+}

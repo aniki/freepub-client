@@ -34,7 +34,10 @@
       </section>
   
       <section id="results">
-        <h1 x-text="i18n[lang].results" x-show="books.length > 0"></h1>
+        <h1 x-show="books.length > 0">
+          <span class="label" x-text="i18n[lang].results"></span>
+          <span class="query-text" x-text="queryText"></span>
+        </h1>
         <ul class="list">
           <template x-for="(book, index) in books" :key="index">
             <li>
@@ -55,7 +58,7 @@
       </section>
 
       <section id="download" :class="isDownloadable ? 'is-active' : ''">
-        <button class="close" @click="isDownloadable = !isDownloadable; isGettingCaptcha = !isGettingCaptcha; currentBook.downloadUrl = ''" x-text="i18n[lang].close"></button>
+        <button class="close" @click="close()" x-text="i18n[lang].close"></button>
         <div class="captcha" x-show="currentBook.downloadUrl === ''">
 
           <img :src="currentBook.captcha" class="captchaImage" alt="">
@@ -67,7 +70,7 @@
         </div>
     
         <div class="get-file" x-show="currentBook.downloadUrl !== ''">
-          <a :href="currentBook.downloadUrl" x-text="i18n[lang].download"></a>
+          <a :href="currentBook.downloadUrl" x-text="i18n[lang].download" @click="close()"></a>
         </div>
       </section>
   

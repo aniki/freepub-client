@@ -1,8 +1,23 @@
+@import 'src/scss/themes.scss';
 @import 'src/scss/loader.scss';
 
 body {
   padding: 0;
   margin: 0;
+  color: var(--color-txt);
+  background-color: var(--color-bg);
+
+  a, button {
+    color: var(--color-txt);
+  }
+
+  input[type=text] {
+    background-color: var(--color-bg);
+  }
+
+  h1 {
+    color: var(--color-title);
+  }
 }
 
 fieldset {
@@ -17,12 +32,13 @@ input {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 0 15px;
+  color: var(--color-txt);
 }
 
 .button {
-  color: white;
-  background-color: #5e5ff4;
-  border: 1px solid #5e5ff4;
+  color: var(--color-txt);
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   border-radius: 5px;
   padding: 0 10px;
   padding-top: 4px;
@@ -30,8 +46,8 @@ input {
   font-weight: bold;
 
   &.secondary {
-    color: #5e5ff4;
-    background-color: white;
+    color: var(--color-primary);
+    background-color: var(--color-bg);
   }
 }
 input + .button {
@@ -66,7 +82,7 @@ header {
       top: 0;
       left: 0;
       right: 0;
-      background-color: #5e5ff4;
+      background-color: var(--color-primary);
     }
     &::after  {
       top: auto;
@@ -79,6 +95,7 @@ header {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 14px;
+    color: var(--color-title);
   }
 }
 
@@ -87,8 +104,8 @@ header {
   top: 0;
   padding: 10px 20px;
   margin-bottom: 40px;
-  background: white;
-  box-shadow: 0 0 10px rgb(255 255 255), 0 0 10px rgb(255 255 255);
+  background: var(--color-bg);
+  box-shadow: 0 0 10px var(--color-bg), 0 0 10px var(--color-bg);
   z-index: 1;
 
   form {
@@ -115,15 +132,20 @@ header {
       height: 58px;
       border-right: 0;
       border-radius: 5px 0 0 5px;
-      border: 1px solid #5e5ff4;
+      border: 1px solid var(--color-primary);
+      outline: none;
     }
 
     button {
       height: 60px;
-      border: 1px solid #5e5ff4;
+      border: 1px solid var(--color-primary);
       border-radius: 0 5px 5px 0;
       margin-left: -2px;
       margin-top: 0;
+      
+      path {
+        fill: var(--color-bg);
+      }
     }
   }
 }
@@ -132,6 +154,13 @@ header {
   h1 {
     text-transform: uppercase;
     font-size: 20px;
+    text-align: left;
+    padding: 0 20px;
+
+    .query-text {
+      text-transform: lowercase;
+      color: var(--color-txt2);
+    }
   }
 
   .list {
@@ -144,7 +173,7 @@ header {
     li {
       display: flex;
       flex-direction: column;
-      border-bottom: 1px solid #e7eaf0;
+      border-top: 1px solid var(--color-line);
     }
 
     .file-info {
@@ -154,7 +183,6 @@ header {
       width: 100%;
       min-height: 50px;
       border: 0;
-      color: black;
       background: transparent;
       text-decoration: none;
       text-align: left;
@@ -172,25 +200,29 @@ header {
         font-weight: bold;
         margin-right: 10px;
         text-transform: uppercase;
-        background: rgba(0, 0, 0, 0.7);
         border-radius: 5px;
-        color: white;
+        color: var(--icon-default);
+        background-color: var(--icon-default-light);
 
         &.ebook {
-          background-color: #dedffc;
-          color: #716edc;
+          color: var(--icon-ebook);
+          background-color: var(--icon-ebook-light);
         }
         &.audiobook {
-          background-color: #ffe8cd;
-          color: #fd8b04;
+          color: var(--icon-audiobook);
+          background-color: var(--icon-audiobook-light);
         }
         &.film {
-          background-color: #ffcdcd;
-          color: #dc6e6e;
+          color: var(--icon-film);
+          background-color: var(--icon-film-light);
+        }
+        &.music {
+          color: var(--icon-music);
+          background-color: var(--icon-music-light);
         }
         &.bd {
-          background-color: #ccf4e7;
-          color: #18c388;
+          color: var(--icon-bd);
+          background-color: var(--icon-bd-light);
         }
       }
       .data {
@@ -213,10 +245,10 @@ header {
       }
       .size {
         display: flex;
-        background: #eee;
+        background: var(--color-bg2);
         font-size: 11px;
         font-weight: bold;
-        color: #666;
+        color: var(--color-txt2);
         padding: 3px 5px;
         border-radius: 3px;
         margin-top: 5px;
@@ -227,11 +259,11 @@ header {
         height:24px;
         margin-left: 8px;
         border-radius: 20px;
-        background: #aaa;
+        background: var(--color-icon);
         padding: 3px;
 
         path {
-          fill: white;
+          fill: var(--color-bg);
         }
       }
     }
@@ -241,14 +273,14 @@ header {
 #download {
   transform: translate3d(0, 100vh, 0);
   position: fixed;
-  background-color: white;
+  background-color: var(--color-bg);
   top: 60%;
   left: 0;
   right: 0;
   bottom: 0;
   border-radius: 10px 10px 0 0;
   padding: 20px 40px;
-  background: #f5f5f5;
+  background: var(--color-bg2);
   transition: transform 0.3s ease-in-out;
   z-index: 10;
 
@@ -282,7 +314,7 @@ header {
       position: absolute;
       width: 100%;
       height: 3px;
-      background: black;
+      background: var(--color-txt);
       top: 50%;
       left: 0;
       transform: rotate(45deg);
@@ -311,18 +343,20 @@ header {
     .captchaImage {
       width: 200px;
       margin-bottom: 20px;
+      margin-left: -30px;
+      filter: invert(83%);
     }
   }
 
   .get-file {
-    padding-top: 40px;
+    padding-top: 30%;
 
     a {
       text-decoration: none;
       font-size: 20px;
       text-transform: uppercase;
       font-weight: bold;
-      color: white;
+      color: var(--color-bg);
       background: #666;
       padding: 10px 30px;
       border-radius: 5px;
@@ -333,7 +367,7 @@ header {
 
 .overlay {
   opacity: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-overlay);
   position: fixed;
   top: 0;
   left: 0;

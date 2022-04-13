@@ -16,6 +16,7 @@ export default () => {
         api_domain: '',
         books: [], // search results
         q: '', // search query
+        queryText: '',
         currentBook: {
             captcha: '',
             code: '',
@@ -29,6 +30,7 @@ export default () => {
         async init() {
             // localStorage sync
             this.books = JSON.parse(localStorage.getItem('books')) || [];
+            this.queryText = JSON.parse(localStorage.getItem('queryText')) || '';
         },
         async query() {
             this.isSearching = true;
@@ -43,9 +45,11 @@ export default () => {
 
             // state update
             this.books = res.results;
+            this.queryText = `${i18n[this.lang].for} ${this.q}`;
             this.q = '';
             // localStorage update
             localStorage.setItem('books', JSON.stringify(this.books));
+            localStorage.setItem('queryText', JSON.stringify(this.queryText));
             // set cookies for PHPSession
             this.cookies = res.cookies;
             document.cookie = res.cookies;
@@ -85,8 +89,11 @@ export default () => {
 
             this.currentBook.code = '';
             this.currentBook.downloadUrl = url;
-
-            console.log(url)
+        },
+        close() {
+            this.isDownloadable = !this.isDownloadable;
+            this.isGettingCaptcha = !this.isGettingCaptcha;
+            this.currentBook.downloadUrl = '';
         }
     }
 }
