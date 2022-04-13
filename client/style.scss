@@ -12,9 +12,6 @@ body {
     color: var(--color-txt);
   }
 
-  input[type="text"] {
-  }
-
   h1 {
     color: var(--color-title);
   }
@@ -29,7 +26,7 @@ fieldset {
 input {
   height: 50px;
   font-size: 18px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-primary);
   border-radius: 5px;
   padding: 0 15px;
   color: var(--color-txt);
@@ -350,8 +347,8 @@ header {
       font-size: 20px;
       text-transform: uppercase;
       font-weight: bold;
-      color: var(--color-bg);
-      background: #666;
+      color: var(--color-btn);
+      background: var(--color-primary);
       padding: 10px 30px;
       border-radius: 5px;
       box-shadow: 0px 2px 5px rgb(0 0 0 / 30%);
