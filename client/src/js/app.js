@@ -91,9 +91,12 @@ export default () => {
             this.currentBook.downloadUrl = url;
         },
         close() {
-            this.isDownloadable = !this.isDownloadable;
-            this.isGettingCaptcha = !this.isGettingCaptcha;
-            this.currentBook.downloadUrl = '';
+            const that = this;
+            setTimeout(() => {
+                that.isDownloadable = !that.isDownloadable;
+                that.isGettingCaptcha = !that.isGettingCaptcha;
+                that.currentBook.downloadUrl = '';
+            }, 1000);
         }
     }
 }
