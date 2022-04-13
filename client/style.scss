@@ -1,5 +1,5 @@
-@import 'src/scss/themes.scss';
-@import 'src/scss/loader.scss';
+@import "src/scss/themes.scss";
+@import "src/scss/loader.scss";
 
 body {
   padding: 0;
@@ -7,12 +7,12 @@ body {
   color: var(--color-txt);
   background-color: var(--color-bg);
 
-  a, button {
+  a,
+  button {
     color: var(--color-txt);
   }
 
-  input[type=text] {
-    background-color: var(--color-bg);
+  input[type="text"] {
   }
 
   h1 {
@@ -33,6 +33,7 @@ input {
   border-radius: 5px;
   padding: 0 15px;
   color: var(--color-txt);
+  background-color: var(--color-bg-input);
 }
 
 .button {
@@ -77,14 +78,14 @@ header {
     &::before,
     &::after {
       position: absolute;
-      content: '';
+      content: "";
       height: 4px;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--color-primary);
     }
-    &::after  {
+    &::after {
       top: auto;
       bottom: 3px;
     }
@@ -142,7 +143,7 @@ header {
       border-radius: 0 5px 5px 0;
       margin-left: -2px;
       margin-top: 0;
-      
+
       path {
         fill: var(--color-bg);
       }
@@ -255,8 +256,8 @@ header {
       }
 
       .dl-icon {
-        width:24px;
-        height:24px;
+        width: 24px;
+        height: 24px;
         margin-left: 8px;
         border-radius: 20px;
         background: var(--color-icon);
@@ -283,17 +284,6 @@ header {
   background: var(--color-bg2);
   transition: transform 0.3s ease-in-out;
   z-index: 10;
-
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: -50px;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   background: rgba(0,0,0,0.3);
-  //   z-index: -1;
-  // }
 
   &.is-active {
     transform: translate3d(0, 0, 0);
@@ -344,7 +334,6 @@ header {
       width: 200px;
       margin-bottom: 20px;
       margin-left: -30px;
-      filter: invert(83%);
     }
   }
 
@@ -382,4 +371,3 @@ header {
     pointer-events: all;
   }
 }
-
