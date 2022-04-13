@@ -54,6 +54,11 @@ export default () => {
             this.cookies = res.cookies;
             document.cookie = res.cookies;
             this.isSearching = false;
+            // scroll to top
+            window.scrollTo({
+                top: 150,
+                behavior: "smooth"
+            });
         },
         async captcha(e, filename, directory) {
             this.isGettingCaptcha = true;
