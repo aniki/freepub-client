@@ -1,6 +1,10 @@
 @import "src/scss/themes.scss";
 @import "src/scss/loader.scss";
 
+html {
+  background-color: var(--color-bg);
+}
+
 body {
   padding: 0;
   margin: 0;
