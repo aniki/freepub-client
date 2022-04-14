@@ -8,7 +8,7 @@ if ("serviceWorker" in navigator) {
 
 export default () => {
     const domain = 'https://freepub-api.herokuapp.com';
-    // const domain = 'https://fti-search.netlify.app';
+    // const domain = 'http://0.0.0.0';
 
     return {
         i18n,
