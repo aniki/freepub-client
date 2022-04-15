@@ -2,8 +2,8 @@ import { i18n } from './i18n';
 import { registerSW } from "virtual:pwa-register";
 
 if ("serviceWorker" in navigator) {
-  // && !/localhost/.test(window.location)) {
-  registerSW();
+    // && !/localhost/.test(window.location)) {
+    registerSW();
 }
 
 export default () => {
@@ -25,6 +25,7 @@ export default () => {
         cookies: [],
         isSearching: false,
         isDownloadable: false,
+        isWaitingCaptcha: false,
         isGettingCaptcha: false,
 
         async init() {
@@ -77,6 +78,8 @@ export default () => {
             }
         },
         async download() {
+            this.isWaitingCaptcha = true;
+
             const { filename, directory, code } = this.currentBook;
             const options = {
                 credentials: "same-origin",
@@ -94,14 +97,17 @@ export default () => {
 
             this.currentBook.code = '';
             this.currentBook.downloadUrl = url;
+            this.isWaitingCaptcha = false;
         },
-        close() {
+        close(timeout = 0) {
             const that = this;
             setTimeout(() => {
-                that.isDownloadable = !that.isDownloadable;
+                this.isDownloadable = false;
+            }, timeout);
+            setTimeout(() => {
                 that.isGettingCaptcha = !that.isGettingCaptcha;
                 that.currentBook.downloadUrl = '';
-            }, 1000);
+            }, timeout + 1000);
         }
     }
 }

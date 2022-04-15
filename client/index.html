@@ -22,7 +22,7 @@
       <section id="search">
         <form action="" @submit.prevent="query">
           <fieldset>
-            <input type="text" name="search" :placeholder="i18n[lang].search_placeholder" x-model="q" />
+            <input type="text" name="search" :placeholder="i18n[lang].search_placeholder" x-model="q" autocomplete="off" />
             <button type="submit" class="button">
               <svg style="width:48px;height:48px;" viewBox="0 0 24 24">
                 <path fill="currentColor"
@@ -72,13 +72,22 @@
           <img :src="currentBook.captcha" class="captchaImage" alt="">
 
           <form action="" @submit.prevent="download">
-            <input type="tel" x-model="currentBook.code" :placeholder="i18n[lang].captcha_placeholder">
+            <input type="tel" x-model="currentBook.code" :placeholder="i18n[lang].captcha_placeholder" autocomplete="off">
             <button type="submit" class="button" x-text="i18n[lang].submit"></button>
           </form>
         </div>
 
+        <div class="captcha-loader-wrapper" x-show="isWaitingCaptcha">
+          <div class="search-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>    
+
         <div class="get-file" x-show="currentBook.downloadUrl !== ''">
-          <a :href="currentBook.downloadUrl" x-text="i18n[lang].download" @click="close()"></a>
+          <a :href="currentBook.downloadUrl" x-text="i18n[lang].download" @click="close(1000)"></a>
         </div>
       </section>
 
