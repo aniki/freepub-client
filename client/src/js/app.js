@@ -7,13 +7,11 @@ if ("serviceWorker" in navigator) {
 }
 
 export default () => {
-    const domain = 'https://freepub-api.herokuapp.com';
-    // const domain = 'http://0.0.0.0';
-
     return {
         i18n,
         lang: 'fr-FR', // navigator.language
-        api_domain: '',
+        env: {},
+        api_url: '',
         books: [], // search results
         q: '', // search query
         queryText: '',
@@ -32,11 +30,22 @@ export default () => {
             // localStorage sync
             this.books = JSON.parse(localStorage.getItem('books')) || [];
             this.queryText = JSON.parse(localStorage.getItem('queryText')) || '';
+
+            // env file
+            const env = await fetch('config.json')
+            .then(
+                async (response) => {
+                    const res = await response.json();
+                    return res;
+                }
+            )
+            console.log(env);
+            this.api_url = (env.ENV === 'dev') ? env.DEV_API_URL : env.API_URL;
         },
         async query() {
             this.isSearching = true;
             // search query
-            const res = await fetch(`${domain}/search?q=${this.q}`)
+            const res = await fetch(`${this.api_url}/search?q=${this.q}`)
                 .then(
                     async (response) => {
                         const res = await response.json()
@@ -65,7 +74,7 @@ export default () => {
             this.isGettingCaptcha = true;
 
             if (e) {
-                const res = await fetch(`${domain}/captcha?filename=${filename}&directory=${directory}`, { credentials: "same-origin" })
+                const res = await fetch(`${this.api_url}/captcha?filename=${filename}&directory=${directory}`, { credentials: "same-origin" })
                     .then(
                         async (response) => {
                             const res = await response.json();
@@ -87,7 +96,7 @@ export default () => {
                     // 'Access-Control-Allow-Credentials' : 'same-origin'
                 }
             }
-            const url = await fetch(`${domain}/download?filename=${filename}&directory=${directory}&code=${code}`, options)
+            const url = await fetch(`${this.api_url}/download?filename=${filename}&directory=${directory}&code=${code}`, options)
                 .then(
                     async (response) => {
                         const res = await response.json();
