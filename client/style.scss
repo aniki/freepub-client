@@ -249,6 +249,7 @@ header {
         align-items: center;
         font-size: 14px;
         font-weight: bold;
+        color: var(--color-primary);
       }
       .author {
         font-size: 14px;
@@ -307,6 +308,7 @@ header {
     width: 36px;
     height: 36px;
     background-color: transparent;
+    z-index: 10;
 
     &::before,
     &::after {
@@ -349,6 +351,19 @@ header {
       margin-bottom: 20px;
       margin-left: -30px;
     }
+  }
+
+  .captcha-loader-wrapper {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    align-items: center;
+    background-color: var(--color-bg2);
+    border-radius: 10px 10px 0 0;
   }
 
   .get-file {
